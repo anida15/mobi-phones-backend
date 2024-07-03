@@ -3,10 +3,10 @@
 import mysql from 'mysql2/promise';
 
 const pool = mysql.createPool({
-  host: 'fdb33.awardspace.net',
-  user: '4142759_genx',
-  password: 'Genx@123',
-  database: '4142759_genx',
+  host: 'sql8.freesqldatabase.com',
+  user: 'sql8717813',
+  password: '7wH2MPKlQQ',
+  database: 'sql8717813',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
