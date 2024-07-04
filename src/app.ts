@@ -9,7 +9,7 @@ const app = express();
 
 // Configure CORS options
 const corsOptions: cors.CorsOptions = {
-  origin: 'https://mobi.phone.ottomansecurity.co.ke/',
+  origin: 'http://localhost:3000',
   optionsSuccessStatus: 200 // Some legacy browsers choke on 204
 };
 
