@@ -7,6 +7,10 @@ import mpesaRouter from './routers/mpesaRouter';
 
 const app = express();
 
+
+
+
+
 // Configure CORS options
 const corsOptions: cors.CorsOptions = {
   origin: 'http://localhost:3000',
