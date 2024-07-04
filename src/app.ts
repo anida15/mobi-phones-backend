@@ -4,21 +4,26 @@ import phoneRouter from './routers/phoneRouter';
 import userRouter from './routers/userRouter';
 import mpesaRouter from './routers/mpesaRouter';
 
-
 const app = express();
 
-// Configure CORS options
+const allowedOrigins = ['http://localhost:3000', 'https://mobi.phone.ottomansecurity.co.ke'];
+
 const corsOptions: cors.CorsOptions = {
-  origin: 'https://mobi.phone.ottomansecurity.co.ke',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   optionsSuccessStatus: 200 // Some legacy browsers choke on 204
 };
 
-// Use CORS middleware with the specified options
 app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/api/phones', phoneRouter);
 app.use('/api/users', userRouter);
-app.use('/api/mpesa', mpesaRouter ); ;
+app.use('/api/mpesa', mpesaRouter);
 
 export default app;
