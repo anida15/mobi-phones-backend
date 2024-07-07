@@ -5,13 +5,10 @@ import bcrypt from 'bcrypt';
 import pool from '../config/database';
 import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import jwt from 'jsonwebtoken';
-
-
-
-
-// TODO: implement security key
-const jwtSecret = 'your-jwt-secret';
-const jwtExpiry = 300; // 5 minutes in seconds
+require('dotenv').config();
+ 
+const jwtSecret =  process.env.JWT_SECRET as string;
+const jwtExpiry = 24 * 60 * 60; // 5 minutes in seconds
 
 
 export class UserController {
@@ -38,7 +35,7 @@ export class UserController {
   // Login class
   static async loginUser(req: Request, res: Response) {
     const errors = validationResult(req);
-
+     
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
@@ -63,6 +60,7 @@ export class UserController {
         return res.status(401).json({ message: 'Invalid username or password' });
       }
 
+     
       // Generate JWT
       const token = jwt.sign(
         { userId: user.id, username: user.username },
@@ -106,10 +104,14 @@ export class UserController {
       const user = new User(username, email, privilege, hashedPassword);
 
       // Store user in the database
+     
       const [result] = await pool.execute<ResultSetHeader>(
         'INSERT INTO users (username, email,privilege, password) VALUES (?, ?,?, ?)',
         [user.username, user.email,user.privilege, user.password]
       );
+
+
+
 
       res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
