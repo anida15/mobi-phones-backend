@@ -18,11 +18,12 @@ export class PhoneController {
     }
     static async getPhoneById  ( req: Request, res: Response){
         
+        const {id} = req.body
 
         try {
             // Get Phones from database Random form the databse  ORDER BY RAND()
             const [data] = await pool.execute(
-               'SELECT * FROM phones WHERE id = ?  ' ,[req.params.id]
+               'SELECT * FROM phones WHERE id = ?  ' ,[id]
             );
             res.status(200).json({'data': data})
 
@@ -32,10 +33,11 @@ export class PhoneController {
     }
 
     static async deletePhone  ( req: Request, res: Response){
+        const {id} =req.body;
         try {
             // Get Phones from database Random form the databse  ORDER BY RAND()
             const [data] = await pool.execute(
-               'DELETE FROM phones WHERE id = ?  ' ,[req.params.id]
+               'DELETE FROM phones WHERE id = ?  ' ,[id]
             );
             res.status(200).json({'data': data})
 
@@ -47,6 +49,7 @@ export class PhoneController {
 
     static async uploadPhone (req: Request, res: Response){
         const {
+            vendorId,
             src,
             model,
             name,
@@ -71,8 +74,9 @@ export class PhoneController {
 
         try {
             const [result] = await pool.execute(
-                'INSERT INTO phones (src, model, name, description, price, rating, category, brand, stockStatus, colorOptions, warranty, releaseDate, batteryLife, dimensions, operatingSystem, connectivity, discount, screenResolution, storageExpansion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                'INSERT INTO phones (vendorId,src, model, name, description, price, rating, category, brand, stockStatus, colorOptions, warranty, releaseDate, batteryLife, dimensions, operatingSystem, connectivity, discount, screenResolution, storageExpansion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
                 [
+                    vendorId,
                     src,
                     model,
                     name,
@@ -111,8 +115,10 @@ export class PhoneController {
 
 
     static async updatePhone(req: Request, res: Response) {
-        const phoneId = req.params.id;
+        
         const {
+            id,
+            vendorId,
             src,
             model,
             name,
@@ -136,8 +142,10 @@ export class PhoneController {
 
         try {
             const [result] = await pool.execute(
-                'UPDATE phones SET src = ?, model = ?, name = ?, description = ?, price = ?, rating = ?, category = ?, brand = ?, stockStatus = ?, colorOptions = ?, warranty = ?, releaseDate = ?, batteryLife = ?, dimensions = ?, operatingSystem = ?, connectivity = ?, discount = ?, screenResolution = ?, storageExpansion = ?  WHERE id = ?',
+                'UPDATE phones SET vendorId =?, src = ?, model = ?, name = ?, description = ?, price = ?, rating = ?, category = ?, brand = ?, stockStatus = ?, colorOptions = ?, warranty = ?, releaseDate = ?, batteryLife = ?, dimensions = ?, operatingSystem = ?, connectivity = ?, discount = ?, screenResolution = ?, storageExpansion = ?  WHERE id = ?',
                 [
+                  
+                    vendorId,
                     src,
                     model,
                     name,
@@ -157,7 +165,7 @@ export class PhoneController {
                     discount,
                     screenResolution,
                     storageExpansion,
-                    phoneId
+                    id
                 ]
             );
 

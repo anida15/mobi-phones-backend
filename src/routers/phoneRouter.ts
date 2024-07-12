@@ -6,9 +6,9 @@ const router = express.Router();
 
 // Define routes for phones
 router.get('/', PhoneController.getAllPhones);
-router.get('/:id', PhoneController.getPhoneById);
-router.delete('/:id',authMiddleware, PhoneController.deletePhone); 
-router.put('/:id',authMiddleware, PhoneController.updatePhone); 
+router.get('/getPhone', PhoneController.getPhoneById);
+router.delete('/delete',authMiddleware, PhoneController.deletePhone); 
+router.post('/updatePhone',authMiddleware, PhoneController.updatePhone); 
 router.post('/upload',authMiddleware, PhoneController.uploadPhone )
 
  
