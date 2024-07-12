@@ -1,6 +1,7 @@
 import express from 'express';
 import { body } from 'express-validator';
-import { mpesaController } from '../controllers/mpesaController';
+import { MpesaController } from '../controllers/mpesaController';
+ 
 
 const router = express.Router();
 
@@ -13,8 +14,9 @@ router.post('/stkPush',
     body('phone')
       .isNumeric().withMessage('Phone number is not valid'),
   ],
-  mpesaController.stkPush
+  MpesaController.stkPush
 );
 
- 
+router.post('/stk_callback', MpesaController.callBack);
+
 export default router;
