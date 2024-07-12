@@ -7,7 +7,7 @@ import { authMiddleware } from './middlewares/auth';
 import cartRouter from './routers/cartRouter';
 const app = express();
 
-const allowedOrigins = ['http://localhost:4000', 'https://mobi.phone.ottomansecurity.co.ke','https://sandbox.safaricom.co.ke'];
+const allowedOrigins = ['http://localhost:4000', 'https://mobi.phone.ottomansecurity.co.ke','https://sandbox.safaricom.co.ke','https://mobi-phones-backend.onrender.com'];
 
 const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
